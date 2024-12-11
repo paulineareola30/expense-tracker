@@ -14,3 +14,13 @@ def add_expense(request):
     else:
         form = ExpenseForm()
     return render(request, 'tracker/add_expense.html', {'form': form})
+
+
+from django.shortcuts import redirect, get_object_or_404
+from .models import Expense
+
+def delete_expense(request, expense_id):
+    if request.method == "POST":
+        expense = get_object_or_404(Expense, id=expense_id)
+        expense.delete()
+    return redirect('expense_list')  # Replace 'expense_list' with the name of your list view URL
